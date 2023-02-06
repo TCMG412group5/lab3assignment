@@ -1,6 +1,7 @@
-import urllib.request
+import requests
 
 
-def download_log():
-    urllib.request.urlretrieve("https://s3.amazonaws.com/tcmg476/http_access_log", "http_access_log")
+url = 'https://s3.amazonaws.com/tcmg476/http_access_log'
+r = requests.get(url, allow_redirects=True)
 
+open('http_access_log', 'wb').write(r.content)
