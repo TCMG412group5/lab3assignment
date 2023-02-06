@@ -6,7 +6,7 @@
     "configurations": [
         {
             "name": "Python: Current File",
-            "type": "python",
+            "type": "Python",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
