@@ -10,7 +10,7 @@ Here’s the scenario: you work for a medium sized company that sells widgets di
 2. Once you download the file, you need to save a local copy to disk (a cached copy) so the next time you run your script, you don't have to wait for the download.
 
 3. Marketing wants to know two things: 
-* How many total requests have been made in the 6 months?
-* How many total requests were made in the time period represented by the log?
+    * How many total requests have been made in the 6 months?
+    * How many total requests were made in the time period represented by the log?
 
 4. You will need to output this data to the screen. The format you choose to do this is up to you, but your decisions and your implementation should be logical and consistent.
