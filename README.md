@@ -1,1 +1,0 @@
-In order to properly run these three programs, first run Downloadlog.py, followed by Counttotal.py and Entrieslast6months.py
