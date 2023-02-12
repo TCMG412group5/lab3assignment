@@ -1,9 +1,10 @@
 """
 This is used for parsing through line in an Apache http log
 """
+
 import re
 
-def http(log_line):
+def http_parse(log_line):
     """Parses an Apache HTTP log line into a dictionary representation.
 
     Args:
@@ -27,7 +28,7 @@ def http(log_line):
 
     Example:
         >>> log = 'local - - [24/Oct/1994:13:41:41 -0600] "GET index.html HTTP/1.0" 200 150'
-        >>> print(parse_http_log(log))
+        >>> print(http_parse(log))
         {
             'remote_host': 'local',
             'day': 24,
