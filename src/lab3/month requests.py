@@ -2,7 +2,7 @@ import re
 import os
 from regex_parse import http_parse
 from log_reader import read_log
-log_lines = read_log("httplogs.txt")
+log_lines = read_log("http_access_log")
 
 things  = {}
 for i in log_lines:
