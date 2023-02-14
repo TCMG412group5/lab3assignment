@@ -82,6 +82,24 @@ def http_parse(log_line):
 
     data = data_modified
 
+    # This is a super hacky way of getting around issues where there is more information after the
+    # "GET [file]" portion of the log line
+
+    # Checks if the length of the data array (data after parse) is more than 10
+    # This is to cut out any weird corrupted lines that only show
+    data_index = [0, 1, 2, 3, 4, 5, 6, 7, -2, -1]
+    data_modified = []
+    for entry in data_index:
+        data_modified.append(data[entry])
+    
+    # Edge case check for if the length of the packet is equal to "-"
+    # If the lenght is equal to "-", set it to 0 instead
+    if "HTTP" in data_modified[-2]:
+        data_modified[-2] = data_modified[-1]
+        data_modified[-1] = str(0)
+
+    data = data_modified
+
     keys_count = 0
     # For loop used to create a dictionary that assigns key:value pairs
     for value in data:
@@ -101,5 +119,5 @@ def http_parse(log_line):
         else:
             log_dict[keys[keys_count]] = value
             keys_count += 1
-        
+
     return log_dict
