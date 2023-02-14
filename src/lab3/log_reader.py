@@ -49,5 +49,17 @@ def read_log(file_arg):
                 log_lines.append(line)
             else:
                 pass
-
+            
+            
+    with open("logs_strings.txt", "w") as f:
+        for s in log_lines:
+            f.write(str(s) + '\n')
+            
+    with open("log_strings.txt", "r") as f: 
+        score = [line.rstrip('\n') for line in f]
+        
+    print(log_lines)
+         
+  
+    
     return log_lines
