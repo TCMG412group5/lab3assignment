@@ -1,0 +1,4 @@
+src/lab3/__pycache__/
+.vscode/
+src/lab3/http_access_log
+src/lab3/test.py

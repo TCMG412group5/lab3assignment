@@ -1,0 +1,28 @@
+from regex_parse import http_parse
+from log_reader import read_log
+import datetime
+
+log_list = read_log("http_access_log")
+previous_week = -1
+week_iterator = 0
+
+for i in log_list:
+    parsed_line = http_parse(i)
+    timestamp_str = str(str(parsed_line["day"]) + "/" + str(parsed_line["month"]) + "/" 
+    + str(parsed_line["year"]) + ":"  + str(parsed_line["hour"]) + ":" 
+    + str(parsed_line["minute"]) + ":" + str(parsed_line["second"]))
+    
+    timestamp_dt = datetime.datetime.strptime(timestamp_str, '%d/%b/%Y:%H:%M:%S')
+    current_week = timestamp_dt.isocalendar()[1]
+
+    if(previous_week == -1):
+        previous_week = current_week
+        week_iterator += 1
+    
+    if(str(current_week) != str(previous_week)):
+        print("Number of entries for week %s is %s." % (str(current_week), str(week_iterator)))
+        previous_week = current_week
+        week_iterator = 0
+
+    else:
+        week_iterator += 1
