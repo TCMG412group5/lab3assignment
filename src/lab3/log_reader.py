@@ -7,6 +7,7 @@ The module contains the following function:
 """
 
 import os
+import re
 
 def read_log(file_arg):
     """
@@ -22,8 +23,8 @@ def read_log(file_arg):
     >>> log_lines = read_log("http_log.txt")
     >>> print(log_lines)
     """
-
     directory = os.path.abspath(os.path.dirname(__file__))
+    line_regex = r'(\b(?!-)\w+[\w./?]+\b|[+-]\d+)'
 
     # Searches for the file name starting from the root directory
     while True:
@@ -41,6 +42,12 @@ def read_log(file_arg):
         # Iterates through the file, strips out \n in each entry, and adds them to a list
         for line in file:
             line = line.rstrip("\n")
-            log_lines.append(line)
+            # This checks if, after applying the regex, the list that is generated is
+            # more than 9 indexes long
+            # This is to prevent corrupted lines from getting added to the list
+            if(len(re.findall(line_regex, line)) > 9):
+                log_lines.append(line)
+            else:
+                pass
 
     return log_lines
