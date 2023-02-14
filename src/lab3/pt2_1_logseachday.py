@@ -1,7 +1,6 @@
 import re
 import os
 
-import numpy as np #Dont think I used this
 from regex_parse import http_parse
 from log_reader import read_log
 #Makes a list of the log lines
