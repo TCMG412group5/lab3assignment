@@ -39,7 +39,6 @@ def http_parse(log_line):
             'timezone': '-0600',
             'method': 'GET',
             'file': 'index.html',
-            'http_version': 'HTTP/1.0',
             'response_code': 200,
             'length': 150
         }
@@ -54,8 +53,34 @@ def http_parse(log_line):
     # Regular expression used to parse the date specifically
     date_regex = r'[\w\d]+'
 
+    # Edge case for if "Villain" or "dasfh" appears instead of "-"
+    if re.search(re.escape("Villain"), log_line, re.IGNORECASE):
+        log_line_modified = re.sub("Villain", "-", log_line, flags=re.IGNORECASE)
+    elif re.search(re.escape("dasfh"), log_line, re.IGNORECASE):
+        log_line_modified = re.sub("dasfh", "-", log_line, flags=re.IGNORECASE)
+    else:
+        log_line_modified = log_line
+
     # Uses the line_regex regular expression to parse through the log line
-    data = re.findall(line_regex, log_line)
+    data = re.findall(line_regex, log_line_modified)
+
+    # This is a super hacky way of getting around issues where there is more information after the
+    # "GET [file]" portion of the log line
+
+    # Checks if the length of the data array (data after parse) is more than 10
+    # This is to cut out any weird corrupted lines that only show
+    data_index = [0, 1, 2, 3, 4, 5, 6, 7, -2, -1]
+    data_modified = []
+    for entry in data_index:
+        data_modified.append(data[entry])
+    
+    # Edge case check for if the length of the packet is equal to "-"
+    # If the lenght is equal to "-", set it to 0 instead
+    if "HTTP" in data_modified[-2]:
+        data_modified[-2] = data_modified[-1]
+        data_modified[-1] = str(0)
+
+    data = data_modified
 
     # This is a super hacky way of getting around issues where there is more information after the
     # "GET [file]" portion of the log line
@@ -94,5 +119,5 @@ def http_parse(log_line):
         else:
             log_dict[keys[keys_count]] = value
             keys_count += 1
-        
+
     return log_dict
