@@ -23,7 +23,6 @@ def read_log(file_arg):
     >>> log_lines = read_log("http_log.txt")
     >>> print(log_lines)
     """
-
     directory = os.path.abspath(os.path.dirname(__file__))
     line_regex = r'(\b(?!-)\w+[\w./?]+\b|[+-]\d+)'
 
