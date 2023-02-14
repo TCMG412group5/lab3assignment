@@ -22,10 +22,8 @@ for i in log_lines:
     except:
         pass
 #print(max(things))    
-Checker = 0
-Name = ''
+Checker = 1
+Name = ""
 for z in things:
-    if things[z] > Checker:
-        Checker = things[z]
-        Name = z
-print("The most requested file was ", Name, " with ", Checker, " requests")
+    if things[z] <= Checker:
+        print("A file only requested once was ", z, " with ", Checker, " requests")
