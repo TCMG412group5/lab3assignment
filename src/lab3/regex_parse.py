@@ -39,7 +39,6 @@ def http_parse(log_line):
             'timezone': '-0600',
             'method': 'GET',
             'file': 'index.html',
-            'http_version': 'HTTP/1.0',
             'response_code': 200,
             'length': 150
         }
@@ -54,8 +53,16 @@ def http_parse(log_line):
     # Regular expression used to parse the date specifically
     date_regex = r'[\w\d]+'
 
+    # Edge case for if "Villain" or "dasfh" appears instead of "-"
+    if re.search(re.escape("Villain"), log_line, re.IGNORECASE):
+        log_line_modified = re.sub("Villain", "-", log_line, flags=re.IGNORECASE)
+    elif re.search(re.escape("dasfh"), log_line, re.IGNORECASE):
+        log_line_modified = re.sub("dasfh", "-", log_line, flags=re.IGNORECASE)
+    else:
+        log_line_modified = log_line
+
     # Uses the line_regex regular expression to parse through the log line
-    data = re.findall(line_regex, log_line)
+    data = re.findall(line_regex, log_line_modified)
 
     # This is a super hacky way of getting around issues where there is more information after the
     # "GET [file]" portion of the log line
